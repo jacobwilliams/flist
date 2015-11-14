@@ -6,7 +6,7 @@
 ! A generic list.
 !
 ! It uses an unlimited polymorphic `class(*)` pointer variable to allow it
-! to contain any type of data. The *key* is a character string.
+! to contain any type of data. The *key* can be an integer or string.
     
     module linked_list_module
 
@@ -22,7 +22,7 @@
 
         private
 
-        character(len=:),allocatable :: key  !! the key
+        class(*),allocatable :: key  !! the key (can be integer or string)
 
         class(*),pointer :: value => null()  !! the data to hold
 
@@ -99,9 +99,9 @@
 
     implicit none
 
-    class(list),intent(inout)   :: me
-    character(len=*),intent(in) :: key
-    logical                     :: has_key
+    class(list),intent(inout) :: me
+    class(*),intent(in)       :: key
+    logical                   :: has_key
 
     has_key = .false.
 
@@ -129,7 +129,7 @@
     implicit none
 
     type(list) :: lst
-    logical,intent(in) :: case_sensitive !! if true, then key searches are case sensitive.
+    logical,intent(in) :: case_sensitive !! if true, then string key searches are case sensitive.
 
     lst%case_sensitive = case_sensitive
 
@@ -305,7 +305,15 @@
         implicit none
         type(node),pointer :: p
         logical,intent(out) :: done
-        write(output_unit,'(A)') p%key
+        
+        associate (key => p%key)
+            select type (key)
+            type is (character(len=*))
+                write(output_unit,'(A)') key
+            type is (integer)
+                write(output_unit,'(I0)') key
+            end select
+        end associate
         done = .false.
         end subroutine print_key
 
@@ -320,7 +328,7 @@
     implicit none
 
     class(list),intent(in)       :: me
-    character(len=*),intent(in)  :: key
+    class(*),intent(in)          :: key
     class(*),pointer,intent(out) :: value
 
     type(node),pointer :: p
@@ -343,7 +351,7 @@
     implicit none
 
     class(list),intent(in)         :: me
-    character(len=*),intent(in)    :: key
+    class(*),intent(in)            :: key
     type(node),pointer,intent(out) :: p_node
 
     type(node),pointer :: p
@@ -370,19 +378,42 @@
     function keys_equal(me,k1,k2)
 
     !! Returns true if the two keys are equal.
+    !!
+    !! Allowing a key to be an integer or a character string
     !! (can be case sensitive or not).
 
     implicit none
 
-    class(list),intent(in)      :: me
-    character(len=*),intent(in) :: k1
-    character(len=*),intent(in) :: k2
-    logical                     :: keys_equal
-
-    if (me%case_sensitive) then
-        keys_equal = k1 == k2
-    else
-        keys_equal = uppercase(k1) == uppercase(k2)
+    class(list),intent(in) :: me
+    class(*),intent(in)    :: k1
+    class(*),intent(in)    :: k2
+    logical                :: keys_equal
+    
+    keys_equal = .false.
+    
+    if (same_type_as(k1,k2)) then
+    
+        select type (k1)
+        type is (integer)
+        
+            select type (k2)
+            type is (integer)
+                keys_equal = k1 == k2
+            end select
+            
+        type is (character(len=*))
+        
+            select type (k2)
+            type is (character(len=*))
+                if (me%case_sensitive) then
+                    keys_equal = k1 == k2
+                else
+                    keys_equal = uppercase(k1) == uppercase(k2)
+                end if
+            end select
+            
+        end select
+        
     end if
 
     end function keys_equal
@@ -423,22 +454,32 @@
     implicit none
 
     class(list),intent(inout)   :: me
-    character(len=*),intent(in) :: key
+    class(*),intent(in)         :: key
     class(*),intent(in),pointer :: value  !! *value* is unlimited polymorphic, so it can
                                           !! be any scalar type. If the type includes
                                           !! pointers or other objects that must be
                                           !! cleaned up when it is destroyed, then it
                                           !! should include a finalizer.
-    logical,intent(in),optional :: destroy_on_delete !! If false, the finilizer will
-                                                         !! not be called when the item is
-                                                         !! removed from the list (the
-                                                         !! pointer will only be
-                                                         !! nullified, so the caller is
-                                                         !! responsible for cleaning it up
-                                                         !! to avoid memory leaks).
-                                                         !! The default is *True*.
+    logical,intent(in),optional :: destroy_on_delete !! If false, the finalizer will
+                                                     !! not be called when the item is
+                                                     !! removed from the list (the
+                                                     !! pointer will only be
+                                                     !! nullified, so the caller is
+                                                     !! responsible for cleaning it up
+                                                     !! to avoid memory leaks).
+                                                     !! The default is *True*.
 
     type(node),pointer :: p
+
+    !only allowing integer or string keys:
+    select type (key)
+    type is (integer)
+        !ok
+    type is (character(len=*))
+        !ok
+    class default
+        error stop 'Error: key must be an integer or character string'
+    end select
 
     ! if the node is already there, then remove it
     call me%get_node(key,p)
@@ -456,7 +497,7 @@
     me%tail  => p
     me%count =  me%count + 1
 
-    p%key    =  key
+    allocate(p%key, source = key)
     p%value  => value
 
     if (present(destroy_on_delete)) then
