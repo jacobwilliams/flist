@@ -1,3 +1,13 @@
+# directories
+doc/
+bin/
+lib/
+Debug/
+Release/
+
+# visual studio
+*.suo
+
 # Compiled Object files
 *.slo
 *.lo

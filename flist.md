@@ -18,3 +18,7 @@ graph: true
 Just some experiments with linked lists and unlimited polymorphic derived types.
 
 A work in progress.
+
+# License
+
+The flist source code and related files and documentation are distributed under a permissive free software [license](https://github.com/jacobwilliams/flist/blob/master/LICENSE) (BSD-style).

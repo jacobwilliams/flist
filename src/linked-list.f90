@@ -1,13 +1,13 @@
 !*****************************************************************************************
 !> author: Jacob Williams
-!  date: 11/13/2015
+!  date: 11/14/2015
 !  license: BSD
 !
 ! A generic list.
 !
 ! It uses an unlimited polymorphic `class(*)` pointer variable to allow it
 ! to contain any type of data. The *key* can be an integer or string.
-    
+
     module linked_list_module
 
     use iso_fortran_env
@@ -48,7 +48,7 @@
 
         private
 
-        logical :: case_sensitive = .true. !! key lookup is case sensitive
+        logical :: case_sensitive = .true. !! character key lookup is case sensitive
         integer :: count          = 0      !! number of items in the list
 
         type(node),pointer :: head => null() !! the first item in the list
@@ -305,7 +305,7 @@
         implicit none
         type(node),pointer :: p
         logical,intent(out) :: done
-        
+
         associate (key => p%key)
             select type (key)
             type is (character(len=*))
@@ -388,21 +388,21 @@
     class(*),intent(in)    :: k1
     class(*),intent(in)    :: k2
     logical                :: keys_equal
-    
+
     keys_equal = .false.
-    
+
     if (same_type_as(k1,k2)) then
-    
+
         select type (k1)
         type is (integer)
-        
+
             select type (k2)
             type is (integer)
                 keys_equal = k1 == k2
             end select
-            
+
         type is (character(len=*))
-        
+
             select type (k2)
             type is (character(len=*))
                 if (me%case_sensitive) then
@@ -411,9 +411,9 @@
                     keys_equal = uppercase(k1) == uppercase(k2)
                 end if
             end select
-            
+
         end select
-        
+
     end if
 
     end function keys_equal
@@ -476,9 +476,9 @@
     type is (integer)
         !ok
     type is (character(len=*))
-        !ok
+        if (len_trim(key)<1) error stop 'Error: key must be nonblank.'
     class default
-        error stop 'Error: key must be an integer or character string'
+        error stop 'Error: key must be an integer or character string.'
     end select
 
     ! if the node is already there, then remove it
