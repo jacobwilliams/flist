@@ -58,7 +58,8 @@
 
         private
 
-        procedure,public :: add                     !! add an item to the list
+        procedure,public :: add                     !! add a pointer item to the list
+        procedure,public :: add_clone               !! add a non-pointer item to the list
         procedure,public :: get => get_data         !! get a pointer to an item in the list
         procedure,public :: destroy => destroy_list !! destroy the list and
                                                     !! deallocate/finalize all the data
@@ -309,7 +310,7 @@
         associate (key => p%key)
             select type (key)
             type is (character(len=*))
-                write(output_unit,'(A)') key
+                write(output_unit,'(A)') '"'//key//'"'
             type is (integer)
                 write(output_unit,'(I0)') key
             end select
@@ -441,6 +442,36 @@
     end do
 
     end function uppercase
+!*****************************************************************************************
+
+!*****************************************************************************************
+    subroutine add_clone(me,key,value)
+
+    !! Add an item to the end of the list by *cloning* it.
+    !! That is, using a sourced allocation: `allocate(newitem, source=value)`.
+    !! A clone is made of the original value, which is not affected.
+    !! The list contains only the clone, which will be deallocated (and
+    !! finalized if a finalizer is present) when removed from the list.
+    !!
+    !! This is different from the [[add]] routine, which takes a pointer input.
+    !!
+    !! This one would normally be used for basic variables and types that
+    !! do not contain pointers to other variables (and are not pointed to by
+    !! other variables)
+
+    implicit none
+
+    class(list),intent(inout) :: me
+    class(*),intent(in)       :: key
+    class(*),intent(in)       :: value
+
+    class(*),pointer :: p_value
+
+    allocate(p_value, source=value) !make a copy
+    call me%add(key,p_value,destroy_on_delete=.true.)
+    nullify(p_value)
+
+    end subroutine add_clone
 !*****************************************************************************************
 
 !*****************************************************************************************
