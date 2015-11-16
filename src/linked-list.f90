@@ -75,6 +75,8 @@
         procedure :: get_node          !! get a pointer to a node in the list
         procedure :: keys_equal        !! for testing key string equality
 
+        final :: list_finalizer
+
     end type list
 
     interface list
@@ -186,6 +188,20 @@
     nullify(me%value)
 
     end subroutine destroy_node_data
+!*****************************************************************************************
+
+!*****************************************************************************************
+    subroutine list_finalizer(me)
+
+    !! just a wrapper for [[destroy_list]].
+
+    implicit none
+
+    type(list),intent(inout) :: me
+
+    call me%destroy()
+
+    end subroutine list_finalizer
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -376,7 +392,7 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    function keys_equal(me,k1,k2)
+    pure function keys_equal(me,k1,k2)
 
     !! Returns true if the two keys are equal.
     !!
