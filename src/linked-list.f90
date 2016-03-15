@@ -6,7 +6,8 @@
 ! A generic list.
 !
 ! It uses an unlimited polymorphic `class(*)` pointer variable to allow it
-! to contain any type of data. The *key* can be an integer or string.
+! to contain any type of data. The `key` can be an integer, string, or
+! any user-defined [[key_class]].
 
     module linked_list_module
 
@@ -16,13 +17,35 @@
 
     private
 
+    type,abstract,public :: key_class
+        !! Can be used as a key for the list.
+        !! it can be extended to use any data as a key.
+        !! all that is necessary is to define the == operator function.
+        !! For convienence, integer or characters keys are also
+        !! allowed to be used.
+    contains
+        private
+        procedure(key_equal_func),deferred :: key_equal
+        generic :: operator(==) => key_equal
+    end type key_class
+
+    abstract interface
+        pure elemental logical function key_equal_func(item1,item2)
+            !! interface for equality operator for [[key_class]].
+            import :: key_class
+            implicit none
+            class(key_class),intent(in) :: item1
+            class(key_class),intent(in) :: item2
+        end function key_equal_func
+    end interface
+
     type :: node
 
         !! a node in the linked list.
 
         private
 
-        class(*),allocatable :: key  !! the key (can be integer or string)
+        class(*),allocatable :: key  !! the key (can be integer, string, or [[key_class]])
 
         class(*),pointer :: value => null()  !! the data to hold
 
@@ -58,7 +81,7 @@
 
         private
 
-        procedure,public :: add                     !! add a pointer item to the list
+        procedure,public :: add_pointer             !! add a pointer item to the list
         procedure,public :: add_clone               !! add a non-pointer item to the list
         procedure,public :: get => get_data         !! get a pointer to an item in the list
         procedure,public :: destroy => destroy_list !! destroy the list and
@@ -397,7 +420,8 @@
     !! Returns true if the two keys are equal.
     !!
     !! Allowing a key to be an integer or a character string
-    !! (can be case sensitive or not).
+    !! (can be case sensitive or not), or alternately, a user-defined
+    !! [[key_class]].
 
     implicit none
 
@@ -411,6 +435,14 @@
     if (same_type_as(k1,k2)) then
 
         select type (k1)
+
+        class is (key_class)
+
+            select type (k2)
+            class is (key_class)
+                keys_equal = k1 == k2
+            end select
+
         type is (integer)
 
             select type (k2)
@@ -469,7 +501,7 @@
     !! The list contains only the clone, which will be deallocated (and
     !! finalized if a finalizer is present) when removed from the list.
     !!
-    !! This is different from the [[add]] routine, which takes a pointer input.
+    !! This is different from the [[add_pointer]] routine, which takes a pointer input.
     !!
     !! This one would normally be used for basic variables and types that
     !! do not contain pointers to other variables (and are not pointed to by
@@ -484,16 +516,16 @@
     class(*),pointer :: p_value
 
     allocate(p_value, source=value) !make a copy
-    call me%add(key,p_value,destroy_on_delete=.true.)
+    call me%add_pointer(key,p_value,destroy_on_delete=.true.)
     nullify(p_value)
 
     end subroutine add_clone
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine add(me,key,value,destroy_on_delete)
+    subroutine add_pointer(me,key,value,destroy_on_delete)
 
-    !! Add an item to end of the list, and associate its pointer to the input value.
+    !! Add an item to the list, and associate its pointer to the input value.
     !!
     !!@note If an item with the same key is already in the list,
     !!      it is removed and the new one will replace it.
@@ -518,14 +550,16 @@
 
     type(node),pointer :: p
 
-    !only allowing integer or string keys:
+    !only allowing integer, string, or key_class keys:
     select type (key)
     type is (integer)
         !ok
     type is (character(len=*))
         if (len_trim(key)<1) error stop 'Error: key must be nonblank.'
+    class is (key_class)
+        !ok
     class default
-        error stop 'Error: key must be an integer or character string.'
+        error stop 'Error: key must be an integer, character string, or key_class.'
     end select
 
     ! if the node is already there, then remove it
@@ -551,7 +585,7 @@
         p%destroy_on_delete = destroy_on_delete
     end if
 
-    end subroutine add
+    end subroutine add_pointer
 !*****************************************************************************************
 
 !*****************************************************************************************
