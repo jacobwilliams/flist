@@ -69,25 +69,25 @@
         call list_of_stuff%get('not there',p)  ! this one is not present in the list
 
         write(*,*) '--------print keys'
-        call list_of_stuff%traverse_keys(print_key)
+        call list_of_stuff%traverse(print_key)
 
         write(*,*) '--------remove stuff3'
         call list_of_stuff%remove('stuff3')
 
         write(*,*) '--------print keys'
-        call list_of_stuff%traverse_keys(print_key)
+        call list_of_stuff%traverse(print_key)
 
         write(*,*) '--------remove stuff4'
         call list_of_stuff%remove('stuff4')
 
         write(*,*) '--------print keys'
-        call list_of_stuff%traverse_keys(print_key)
+        call list_of_stuff%traverse(print_key)
 
         write(*,*) '--------remove name'
         call list_of_stuff%remove('name')
 
         write(*,*) '--------print keys'
-        call list_of_stuff%traverse_keys(print_key)
+        call list_of_stuff%traverse(print_key)
 
         write(*,*) '--------remove stuff1, stuff2, and age'
         call list_of_stuff%remove('stuff1')
@@ -95,7 +95,7 @@
         call list_of_stuff%remove('age')
 
         write(*,*) '--------print keys'
-        call list_of_stuff%traverse_keys(print_key)
+        call list_of_stuff%traverse(print_key)
 
         write(*,*) '--------destroy list'
         call list_of_stuff%destroy()
@@ -106,13 +106,14 @@
 
     contains
 
-        subroutine print_key(key,done)  !! print the key for this node
+        subroutine print_key(key,value,done)  !! print the key for this node
 
         use iso_fortran_env, only: output_unit
 
         implicit none
 
         class(*),intent(in) :: key
+        class(*),pointer    :: value
         logical,intent(out) :: done
 
         character(len=10) :: key_string

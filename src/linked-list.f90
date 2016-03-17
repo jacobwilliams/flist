@@ -87,14 +87,12 @@
         procedure,public :: destroy => destroy_list !! destroy the list and
                                                     !! deallocate/finalize all the data
         procedure,public :: has_key                 !! if the key is present in the list
-        procedure,public :: traverse_keys           !! traverse each node of the list are return the key
-
-        generic,public :: remove => remove_by_key,remove_by_pointer !! remove item from the list
+        procedure,public :: traverse                !! traverse the list are return each key & value
+        procedure,public :: remove => remove_by_key !! remove item from the list, given the key
 
         !private routines:
-        procedure :: traverse          !! traverse each node of the list
-        procedure :: remove_by_key     !! remove node given the key
-        procedure :: remove_by_pointer !! remove node given pointer
+        procedure :: traverse_list     !! traverse each node of the list
+        procedure :: remove_by_pointer !! remove node from list, given pointer to it
         procedure :: get_node          !! get a pointer to a node in the list
         procedure :: keys_equal        !! for testing key string equality
 
@@ -108,18 +106,19 @@
 
     abstract interface
 
-        subroutine iterator_func(me,done) !! for traversing all nodes in a list
+        subroutine iterator_func(me,done) !! internal function for traversing all nodes in a list
         import :: node
         implicit none
         type(node),pointer  :: me
         logical,intent(out) :: done !! set to true to stop traversing
         end subroutine iterator_func
 
-        subroutine key_iterator(key,done) !! for traversing all keys in a list
+        subroutine key_iterator(key,value,done) !! for traversing all keys in a list
         import :: node
         implicit none
-        class(*),intent(in) :: key
-        logical,intent(out) :: done !! set to true to stop traversing
+        class(*),intent(in)  :: key   !! the node key
+        class(*),pointer     :: value !! pointer to the node value
+        logical,intent(out)  :: done  !! set to true to stop traversing
         end subroutine key_iterator
 
     end interface
@@ -141,7 +140,7 @@
     has_key = .false.
 
     ! traverse the list:
-    call me%traverse(key_search)
+    call me%traverse_list(key_search)
 
     contains
 
@@ -172,7 +171,7 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine traverse(me,iterator)
+    subroutine traverse_list(me,iterator)
 
     !! traverse list from head to tail, and call the iterator function for each node.
 
@@ -197,11 +196,11 @@
         end if
     end do
 
-    end subroutine traverse
+    end subroutine traverse_list
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine traverse_keys(me,iterator)
+    subroutine traverse(me,iterator)
 
     !! traverse list from head to tail, and call the iterator function for each key.
 
@@ -213,20 +212,24 @@
     type(node),pointer :: p
     logical :: done
 
-    done = .false.
-    p => me%head
+    call me%traverse_list(key_iterator_wrapper)
 
-    do
-        if (associated(p)) then
-            call iterator(p%key,done)
-            if (done) exit
-            p => p%next
-        else
-            exit ! done
-        end if
-    end do
+    contains
 
-    end subroutine traverse_keys
+        subroutine key_iterator_wrapper(me,done)
+
+        !! for calling the user-specified key_iterator function.
+
+        implicit none
+
+        type(node),pointer  :: me
+        logical,intent(out) :: done !! set to true to stop traversing
+
+        call iterator(me%key,me%value,done)
+
+        end subroutine key_iterator_wrapper
+
+    end subroutine traverse
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -569,7 +572,7 @@
 
     ! if the node is already there, then remove it
     call me%get_node(key,p)
-    if (associated(p)) call me%remove(p)
+    if (associated(p)) call me%remove_by_pointer(p)
 
     if (associated(me%tail)) then
         allocate(me%tail%next)  !insert new item at the end
