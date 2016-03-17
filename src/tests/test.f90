@@ -89,7 +89,7 @@
         write(*,*) '--------print keys'
         call list_of_stuff%traverse_keys(print_key)
 
-        write(*,*) '--------remove all of them'
+        write(*,*) '--------remove stuff1, stuff2, and age'
         call list_of_stuff%remove('stuff1')
         call list_of_stuff%remove('stuff2')
         call list_of_stuff%remove('age')
@@ -103,9 +103,6 @@
         ! q was not destroyed when it was removed from the list:
         write(*,*) '--------destroy q'
         deallocate(q)
-
-        pause
-        stop
 
     contains
 
