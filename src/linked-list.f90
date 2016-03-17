@@ -87,7 +87,7 @@
         procedure,public :: destroy => destroy_list !! destroy the list and
                                                     !! deallocate/finalize all the data
         procedure,public :: has_key                 !! if the key is present in the list
-        procedure,public :: print_keys              !! print all the keys in the list (debugging)
+        procedure,public :: traverse_keys           !! traverse each node of the list are return the key
 
         generic,public :: remove => remove_by_key,remove_by_pointer !! remove item from the list
 
@@ -107,12 +107,21 @@
     end interface
 
     abstract interface
+
         subroutine iterator_func(me,done) !! for traversing all nodes in a list
         import :: node
         implicit none
-        type(node),pointer :: me
+        type(node),pointer  :: me
         logical,intent(out) :: done !! set to true to stop traversing
         end subroutine iterator_func
+
+        subroutine key_iterator(key,done) !! for traversing all keys in a list
+        import :: node
+        implicit none
+        class(*),intent(in) :: key
+        logical,intent(out) :: done !! set to true to stop traversing
+        end subroutine key_iterator
+
     end interface
 
     contains
@@ -189,6 +198,35 @@
     end do
 
     end subroutine traverse
+!*****************************************************************************************
+
+!*****************************************************************************************
+    subroutine traverse_keys(me,iterator)
+
+    !! traverse list from head to tail, and call the iterator function for each key.
+
+    implicit none
+
+    class(list),intent(inout) :: me
+    procedure(key_iterator)  :: iterator  !! the function to call for each node.
+
+    type(node),pointer :: p
+    logical :: done
+
+    done = .false.
+    p => me%head
+
+    do
+        if (associated(p)) then
+            call iterator(p%key,done)
+            if (done) exit
+            p => p%next
+        else
+            exit ! done
+        end if
+    end do
+
+    end subroutine traverse_keys
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -325,39 +363,6 @@
     end if
 
     end subroutine remove_by_pointer
-!*****************************************************************************************
-
-!*****************************************************************************************
-    subroutine print_keys(me)
-
-    !! Prints a list of the keys to the console (for debugging).
-
-    implicit none
-
-    class(list),intent(inout) :: me
-
-    ! traverse the list:
-    call me%traverse(print_key)
-
-    contains
-
-        subroutine print_key(p,done)  !! print the key for this node
-        implicit none
-        type(node),pointer :: p
-        logical,intent(out) :: done
-
-        associate (key => p%key)
-            select type (key)
-            type is (character(len=*))
-                write(output_unit,'(A)') '"'//key//'"'
-            type is (integer)
-                write(output_unit,'(I0)') key
-            end select
-        end associate
-        done = .false.
-        end subroutine print_key
-
-    end subroutine print_keys
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -501,7 +506,7 @@
     !! The list contains only the clone, which will be deallocated (and
     !! finalized if a finalizer is present) when removed from the list.
     !!
-    !! This is different from the [[add_pointer]] routine, which takes a pointer input.
+    !! This is different from the [[list:add_pointer]] routine, which takes a pointer input.
     !!
     !! This one would normally be used for basic variables and types that
     !! do not contain pointers to other variables (and are not pointed to by
