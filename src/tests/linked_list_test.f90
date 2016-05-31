@@ -1,8 +1,9 @@
 !*****************************************************************************************
-    program main
+    program linked_list_test
 
     use linked_list_module
     use blah_module
+    use key_module
 
     implicit none
 
@@ -134,5 +135,5 @@
 
         end subroutine print_key
 
-    end program main
+    end program linked_list_test
 !*****************************************************************************************
