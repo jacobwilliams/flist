@@ -188,9 +188,6 @@
     class(list),intent(inout) :: me
     procedure(key_iterator)  :: iterator  !! the function to call for each node.
 
-    type(node),pointer :: p
-    logical :: done
-
     call me%traverse_list(key_iterator_wrapper)
 
     contains
