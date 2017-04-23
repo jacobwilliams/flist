@@ -24,7 +24,8 @@
         stuff%i = 1; allocate(p, source = stuff); call list_of_stuff%add_pointer('stuff1',p)
         stuff%i = 2; allocate(p, source = stuff); call list_of_stuff%add_pointer('stuff2',p)
         stuff%i = 3; allocate(p, source = stuff); call list_of_stuff%add_pointer('stuff3',p)
-        stuff%i = 3; allocate(q, source = stuff); call list_of_stuff%add_pointer('stuff3',q,destroy_on_delete=.false.) !add another with the same name
+        !add another with the same name:
+        stuff%i = 3; allocate(q, source = stuff); call list_of_stuff%add_pointer('stuff3',q,destroy_on_delete=.false.)
         stuff%i = 4; allocate(p, source = stuff); call list_of_stuff%add_pointer('stuff4',p)
 
         stuff%i = 1001; allocate(p, source = stuff); call list_of_stuff%add_pointer(1001,p)

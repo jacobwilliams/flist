@@ -85,14 +85,16 @@
 
     abstract interface
 
-        subroutine iterator_func(me,done) !! internal function for traversing all nodes in a list
+        subroutine iterator_func(me,done)
+        !! internal function for traversing all nodes in a list
         import :: node
         implicit none
         type(node),pointer  :: me
         logical,intent(out) :: done !! set to true to stop traversing
         end subroutine iterator_func
 
-        subroutine key_iterator(key,value,done) !! for traversing all keys in a list
+        subroutine key_iterator(key,value,done)
+        !! for traversing all keys in a list
         import :: node
         implicit none
         class(*),intent(in)  :: key   !! the node key
@@ -106,9 +108,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    function has_key(me,key)
+!>
+!  Returns true if the key is present in the list
 
-    !! Returns true if the key is present in the list
+    function has_key(me,key)
 
     implicit none
 
@@ -123,7 +126,8 @@
 
     contains
 
-        subroutine key_search(p,done)  !! search for the key
+        subroutine key_search(p,done)
+        !! search for the key
         implicit none
         type(node),pointer  :: p
         logical,intent(out) :: done
@@ -135,14 +139,16 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    function initialize_list(case_sensitive) result(lst)
+!>
+!  list constructor.
 
-    !! list constructor.
+    function initialize_list(case_sensitive) result(lst)
 
     implicit none
 
     type(list) :: lst
-    logical,intent(in) :: case_sensitive !! if true, then string key searches are case sensitive.
+    logical,intent(in) :: case_sensitive !! if true, then string key
+                                         !! searches are case sensitive.
 
     lst%case_sensitive = case_sensitive
 
@@ -150,9 +156,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine traverse_list(me,iterator)
+!>
+!  traverse list from head to tail, and call the iterator function for each node.
 
-    !! traverse list from head to tail, and call the iterator function for each node.
+    subroutine traverse_list(me,iterator)
 
     implicit none
 
@@ -179,9 +186,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine traverse(me,iterator)
+!>
+!  traverse list from head to tail, and call the iterator function for each key.
 
-    !! traverse list from head to tail, and call the iterator function for each key.
+    subroutine traverse(me,iterator)
 
     implicit none
 
@@ -209,9 +217,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine destroy_node_data(me)
+!>
+!  destroy the data in the node.
 
-    !! destroy the data in the node.
+    pure elemental subroutine destroy_node_data(me)
 
     implicit none
 
@@ -231,9 +240,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine list_finalizer(me)
+!>
+!  just a wrapper for [[destroy_list]].
 
-    !! just a wrapper for [[destroy_list]].
+    pure elemental subroutine list_finalizer(me)
 
     implicit none
 
@@ -245,9 +255,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine destroy_list(me)
+!>
+!  destroy the list (traverses from head to tail)
 
-    !! destroy the list (traverses from head to tail)
+    pure elemental subroutine destroy_list(me)
 
     implicit none
 
@@ -264,9 +275,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    recursive subroutine destroy_node(me)
+!>
+!  destroy the node (and subsequent ones in the list).
 
-    !! destroy the node (and subsequent ones in the list).
+    pure recursive subroutine destroy_node(me)
 
     implicit none
 
@@ -284,9 +296,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine remove_by_key(me,key)
+!>
+!  Remove an item from the list (given the key).
 
-    !! Remove an item from the list (given the key).
+    subroutine remove_by_key(me,key)
 
     implicit none
 
@@ -302,9 +315,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine remove_by_pointer(me,p)
+!>
+!  Remove an item from the list.
 
-    !! Remove an item from the list.
+    subroutine remove_by_pointer(me,p)
 
     implicit none
 
@@ -345,9 +359,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine get_data(me,key,value)
+!>
+!  Returns a pointer to the data stored in the list.
 
-    !! Returns a pointer to the data stored in the list.
+    subroutine get_data(me,key,value)
 
     implicit none
 
@@ -368,9 +383,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine get_node(me,key,p_node)
+!>
+!  Returns a pointer to a node in a list.
 
-    !! Returns a pointer to a node in a list.
+    subroutine get_node(me,key,p_node)
 
     implicit none
 
@@ -399,13 +415,14 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    pure function keys_equal(me,k1,k2)
+!>
+!  Returns true if the two keys are equal.
+!
+!  Allowing a key to be an integer or a character string
+!  (can be case sensitive or not), or alternately, a user-defined
+!  [[key_class]].
 
-    !! Returns true if the two keys are equal.
-    !!
-    !! Allowing a key to be an integer or a character string
-    !! (can be case sensitive or not), or alternately, a user-defined
-    !! [[key_class]].
+    pure function keys_equal(me,k1,k2)
 
     implicit none
 
@@ -453,9 +470,10 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    pure function uppercase(str) result(string)
+!>
+!  Convert a string to uppercase.
 
-    !! Convert a string to uppercase.
+    pure function uppercase(str) result(string)
 
     implicit none
 
@@ -477,19 +495,21 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine add_clone(me,key,value)
+!>
+!  Add an item to the end of the list by *cloning* it.
+!  That is, using a sourced allocation: `allocate(newitem, source=value)`.
+!  A clone is made of the original value, which is not affected.
+!  The list contains only the clone, which will be deallocated (and
+!  finalized if a finalizer is present) when removed from the list.
+!
+!  This is different from the [[list:add_pointer]] routine,
+!  which takes a pointer input.
+!
+!  This one would normally be used for basic variables and types that
+!  do not contain pointers to other variables (and are not pointed to by
+!  other variables)
 
-    !! Add an item to the end of the list by *cloning* it.
-    !! That is, using a sourced allocation: `allocate(newitem, source=value)`.
-    !! A clone is made of the original value, which is not affected.
-    !! The list contains only the clone, which will be deallocated (and
-    !! finalized if a finalizer is present) when removed from the list.
-    !!
-    !! This is different from the [[list:add_pointer]] routine, which takes a pointer input.
-    !!
-    !! This one would normally be used for basic variables and types that
-    !! do not contain pointers to other variables (and are not pointed to by
-    !! other variables)
+    subroutine add_clone(me,key,value)
 
     implicit none
 
@@ -507,12 +527,13 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-    subroutine add_pointer(me,key,value,destroy_on_delete)
+!>
+!  Add an item to the list, and associate its pointer to the input value.
+!
+!@note If an item with the same key is already in the list,
+!      it is removed and the new one will replace it.
 
-    !! Add an item to the list, and associate its pointer to the input value.
-    !!
-    !!@note If an item with the same key is already in the list,
-    !!      it is removed and the new one will replace it.
+    subroutine add_pointer(me,key,value,destroy_on_delete)
 
     implicit none
 
