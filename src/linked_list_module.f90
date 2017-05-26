@@ -18,9 +18,10 @@
 
     private
 
-    type :: node
+    type,public :: node
 
-        !! a node in the linked list.
+        !! a node in the linked list. This is the container to
+        !! the unlimited polymorphic `value` variable.
 
         private
 
@@ -40,7 +41,8 @@
 
         private
 
-        procedure :: destroy => destroy_node_data  !! deallocate value
+        procedure,public :: destroy  => destroy_node_data  !! deallocate value
+        procedure,public :: get_data => get_node_data      !! get data from a node
 
     end type node
 
@@ -69,11 +71,13 @@
         procedure,public :: traverse                !! traverse the list are return each key & value
         procedure,public :: remove => remove_by_key !! remove item from the list, given the key
 
+        ! procedures that operate on nodes:
+        procedure,public :: remove_by_pointer !! remove node from list, given pointer to it
+        procedure,public :: get_node          !! get a pointer to a node in the list
+        procedure,public :: traverse_list     !! traverse each node of the list
+
         !private routines:
-        procedure :: traverse_list     !! traverse each node of the list
-        procedure :: remove_by_pointer !! remove node from list, given pointer to it
-        procedure :: get_node          !! get a pointer to a node in the list
-        procedure :: keys_equal        !! for testing key string equality
+        procedure :: keys_equal     !! for testing key string equality
 
         final :: list_finalizer
 
@@ -95,7 +99,6 @@
 
         subroutine key_iterator(key,value,done)
         !! for traversing all keys in a list
-        import :: node
         implicit none
         class(*),intent(in)  :: key   !! the node key
         class(*),pointer     :: value !! pointer to the node value
@@ -356,6 +359,21 @@
     end if
 
     end subroutine remove_by_pointer
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Get the data from a node
+
+    subroutine get_node_data(me,value)
+    implicit none
+
+    class(node),intent(in)       :: me
+    class(*),pointer,intent(out) :: value
+
+    value => me%value
+
+    end subroutine get_node_data
 !*****************************************************************************************
 
 !*****************************************************************************************

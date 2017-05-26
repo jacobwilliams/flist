@@ -1,6 +1,9 @@
 !*****************************************************************************************
+!>
+!  An example of a derived type that can be added to the generic list.
+
     module blah_module
-    !! An example of a derived type that can be added to the generic list.
+
     use linked_list_module
 
     implicit none
@@ -25,7 +28,8 @@
         end subroutine destroy_blah
 
         subroutine get_blah_from_list(list_of_items,key,value)
-        !! a wrapper to return a pointer to a type(blah) in a list
+
+            !! a wrapper to return a pointer to a `type(blah)` in a list
 
             implicit none
 
