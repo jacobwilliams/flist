@@ -16,14 +16,15 @@ create_model    = test.create_model
 access_model    = test.access_model
 destroy_model   = test.destroy_model
 destroy_list    = test.destroy_list
-initialize_list.restype = c_void_p
-access_model.restype    = c_void_p
-destroy_model.restype   = c_void_p
-destroy_list.restype    = c_void_p
+initialize_list.restype = None
+access_model.restype    = None
+destroy_model.restype   = None
+destroy_list.restype    = None
 create_model.argtypes   = [c_int]
-create_model.restype    = POINTER(c_long) # `c_int` also seems to work ?
+create_model.restype    = POINTER(c_int)  # `c_long` also seems to work ?
                                           # not really sure what is correct for this.
-                                          # Fortran returns a `type(c_ptr)`.
+                                          # Fortran returns a `type(c_ptr)`, maybe
+                                          # in this context it doesn't matter
 
 print('')
 print( 'calling initialize_list...')
@@ -32,10 +33,10 @@ initialize_list()
 
 print( 'calling create_model...')
 
-i = c_int(989)
-#cp = create_model(i)
-#cp = byref(cp)
-cp = byref(create_model(i)) # to pass by reference
+i = c_int(989)   # some input to the model
+cp = create_model(i)
+
+#cp = byref(cp)  # - don't need this if subroutine argument has `value` attribute
 
 print( 'calling access_model...')
 

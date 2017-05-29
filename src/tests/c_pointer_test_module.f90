@@ -74,7 +74,7 @@
 
     implicit none
 
-    type(c_ptr),intent(in) :: cp
+    type(c_ptr),intent(in),value :: cp
 
     type(node),pointer :: n
     class(*),pointer :: model
@@ -95,7 +95,7 @@
             ! do something with the model:
             select type (model)
             type is (blah)
-                write(*,*) 'got blah: ', model%i
+                write(*,*) 'blah: ', model%i
                 model%i = model%i + 1
             class default
                 error stop 'error: not the right type'
@@ -116,7 +116,7 @@
 
     implicit none
 
-    type(c_ptr),intent(in) :: cp
+    type(c_ptr),intent(in),value :: cp
 
     type(node),pointer :: n
 
