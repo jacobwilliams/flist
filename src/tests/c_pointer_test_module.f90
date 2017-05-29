@@ -33,27 +33,23 @@
 
     implicit none
 
-    write(*,*) 'initialize list...'
-
     list_of_models = list(.false.)
 
     end subroutine initialize_list
 
-    subroutine create_model(i,cp) bind(c,name='create_model')
+    function create_model(i) bind(c,name='create_model') result(cp)
 
     !! Create a new model and add it to the list.
     !! Return a C pointer that points to the list node.
 
     implicit none
 
-    integer(c_int),intent(in) :: i
-    type(c_ptr),intent(out) :: cp
+    integer(c_int),intent(in),value :: i
+    type(c_ptr) :: cp
 
     type(blah),pointer :: s
     type(node),pointer :: n
     class(*),pointer   :: p
-
-    write(*,*) 'create model...'
 
     ! create a model:
     allocate(blah :: s)
@@ -69,8 +65,9 @@
 
     ! return a c pointer to this node:
     cp = c_loc(n)
+    !ip = cp_to_ip(c_loc(n))
 
-    end subroutine create_model
+    end function create_model
 
     subroutine access_model(cp) bind(c,name='access_model')
 
@@ -83,21 +80,34 @@
     type(node),pointer :: n
     class(*),pointer :: model
 
+    nullify(n)
+
     ! convert the c pointer back to a fortran
     ! pointer to a node in the list:
     call c_f_pointer(cp, n)
 
-    ! get the model from this node:
-    call n%get_data(model)
+    if (associated(n)) then
 
-    ! do something with the model:
-    select type (model)
-    type is (blah)
-        write(*,*) 'got blah: ', model%i
-        model%i = model%i + 1
-    class default
-        error stop 'error: not the right type'
-    end select
+        ! get the model from this node:
+        call n%get_data(model)
+
+        if (associated(model)) then
+
+            ! do something with the model:
+            select type (model)
+            type is (blah)
+                write(*,*) 'got blah: ', model%i
+                model%i = model%i + 1
+            class default
+                error stop 'error: not the right type'
+            end select
+
+        else
+            error stop 'model not associated!'
+        end if
+    else
+        error stop 'n not associated!'
+    end if
 
     end subroutine access_model
 
@@ -110,8 +120,6 @@
     type(c_ptr),intent(in) :: cp
 
     type(node),pointer :: n
-
-    write(*,*) 'destroy model...'
 
     ! convert the c pointer back to a fortran
     ! pointer to a node in the list:
@@ -127,8 +135,6 @@
     !! List destructor. Call when we don't need it anymore.
 
     implicit none
-
-    write(*,*) 'destroy list...'
 
     call list_of_models%destroy()
 

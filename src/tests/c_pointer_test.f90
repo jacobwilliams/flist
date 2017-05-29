@@ -14,7 +14,7 @@
 
     call initialize_list()
 
-    call create_model(989,cp)
+    cp = create_model(989)
     do i=1,10
         call access_model(cp)
     end do

@@ -371,7 +371,11 @@
     class(node),intent(in)       :: me
     class(*),pointer,intent(out) :: value
 
-    value => me%value
+    if (associated(me%value)) then
+        value => me%value
+    else
+        error stop 'error: value pointer is not associated'
+    end if
 
     end subroutine get_node_data
 !*****************************************************************************************
