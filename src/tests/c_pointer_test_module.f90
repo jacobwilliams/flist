@@ -65,7 +65,6 @@
 
     ! return a c pointer to this node:
     cp = c_loc(n)
-    !ip = cp_to_ip(c_loc(n))
 
     end function create_model
 
