@@ -65,7 +65,13 @@
         
             
                                 
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+        
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
                
+            <li><a href="../lists/types.html">Derived Types</a></li>
+        
                
         
         
@@ -82,7 +88,13 @@
 
 
 
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
                              
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
 
 
 
@@ -172,6 +184,29 @@
 
 
 
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints-0">Abstract Interfaces</a></h3></div>
+  <div id="absints-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/key_module.html#interface-key_equal_func">key_equal_func</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-0">Derived Types</a></h3></div>
+  <div id="types-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/key_module.html#type-key_class">key_class</a>
+      
+    </div>
+  </div>
+</div>
 
 
 
@@ -182,7 +217,6 @@
 
 
 
-<em>None</em>
 
 
 </div>
@@ -434,6 +468,29 @@
 
 
 
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints-1">Abstract Interfaces</a></h3></div>
+  <div id="absints-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/key_module.html#interface-key_equal_func">key_equal_func</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-1">Derived Types</a></h3></div>
+  <div id="types-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/key_module.html#type-key_class">key_class</a>
+      
+    </div>
+  </div>
+</div>
 
 
 
@@ -444,7 +501,6 @@
 
 
 
-<em>None</em>
 
 
     </section>
@@ -459,7 +515,140 @@
     
 
     
+    <section>
+     <h2>Abstract Interfaces</h2>
+   
+     
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="interface-key_equal_func"></span><h3>abstract interface
     
+  </h3></div>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+    
+    
+    <h3>
+private pure elemental function key_equal_func(item1, item2)
+    
+    
+   
+</h3>
+    
+
+
+
+<p>interface for equality operator for <a href="../type/key_class.html">key_class</a>.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/key_class.html'>key_class</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>item1</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/key_class.html'>key_class</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>item2</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>logical
+  </small></h4>
+  
+    
+
+    </li>
+  </ul>
+</div>
+
+    
+    </section>
+  <br>
+    
+    
+    
+    <section>
+     <h2>Derived Types</h2>
+   
+     
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="type-key_class"></span><h3>type, private, abstract :: <a href='../type/key_class.html'>key_class</a>
+    
+  </h3></div>
+  <div class="panel-body">
+    
+    
+    <p>Can be used as a key for the list.
+it can be extended to use any data as a key.
+all that is necessary is to define the == operator function.
+For convienence, integer or characters keys are also
+allowed to be used.</p>
+    
+     
+     
+          
+     
+     <h4>Type-Bound Procedures</h4>
+      <table class="table table-striped varlist">
+      <tbody>
+      
+       <tr><td>procedure(key_equal_func), private :: <strong><a href='../type/key_class.html#boundprocedure-key_equal'>key_equal</a></strong>  </td>
+       <td></td></tr>
+      
+       <tr><td>generic, public :: <strong><a href='../type/key_class.html#boundprocedure-operator%28%3D%3D%29'>operator(==)</a></strong>  => key_equal </td>
+       <td></td></tr>
+      
+       </tbody>
+       </table>
+     
+  </div>
+</div>
+
+     
+    </section>
+  <br>
     
     
     
