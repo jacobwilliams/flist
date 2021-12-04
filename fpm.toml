@@ -1,0 +1,28 @@
+name = "flist"
+author = "Jacob Williams"
+copyright  = "Copyright (c) 2018-2021, Jacob Williams"
+license = "BSD-3"
+description = "Modern Fortran Linked List"
+homepage = "https://github.com/jacobwilliams/flist"
+keywords = ["linked list"]
+
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+
+[library]
+source-dir = "src"
+
+[install]
+library = true
+
+[[test]]
+name = "linked_list_test"
+source-dir = "tests"
+main = "linked_list_test.f90"
+
+[[test]]
+name = "c_pointer_test"
+source-dir = "tests"
+main = "c_pointer_test.f90"

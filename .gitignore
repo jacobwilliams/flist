@@ -4,6 +4,7 @@ bin/
 lib/
 Debug/
 Release/
+build/
 
 # visual studio
 *.suo
@@ -37,3 +38,6 @@ Release/
 *.exe
 *.out
 *.app
+
+# misc
+.DS_Store
