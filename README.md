@@ -30,3 +30,6 @@ The API documentation for the current ```master``` branch can be found [here](ht
 
 The `flist` source code and related files and documentation are distributed under a permissive free software [license](https://github.com/jacobwilliams/flist/blob/master/LICENSE) (BSD-3).
 
+### See also
+
+ * J. Williams, [Linked Lists](https://degenerateconic.com/linked-lists.html), Apr 5, 2016 [degenerateconic.com]
