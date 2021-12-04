@@ -1,6 +1,7 @@
 project: flist
 project_dir: ./src
 output_dir: ./doc
+media_dir: ./media
 summary: Modern Fortran Linked List
 project_github: https://github.com/jacobwilliams/flist
 author: Jacob Williams
