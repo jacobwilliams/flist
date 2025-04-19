@@ -223,7 +223,7 @@
 !>
 !  destroy the data in the node.
 
-    pure elemental subroutine destroy_node_data(me)
+    impure elemental subroutine destroy_node_data(me)
 
     implicit none
 
@@ -246,7 +246,7 @@
 !>
 !  just a wrapper for [[destroy_list]].
 
-    pure elemental subroutine list_finalizer(me)
+    impure elemental subroutine list_finalizer(me)
 
     implicit none
 
@@ -261,7 +261,7 @@
 !>
 !  destroy the list (traverses from head to tail)
 
-    pure elemental subroutine destroy_list(me)
+    impure elemental subroutine destroy_list(me)
 
     implicit none
 
@@ -281,7 +281,7 @@
 !>
 !  destroy the node (and subsequent ones in the list).
 
-    pure recursive subroutine destroy_node(me)
+    impure recursive subroutine destroy_node(me)
 
     implicit none
 
