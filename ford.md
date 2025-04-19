@@ -1,5 +1,5 @@
 project: flist
-project_dir: ./src
+src_dir: ./src
 output_dir: ./doc
 media_dir: ./media
 summary: Modern Fortran Linked List
