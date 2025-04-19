@@ -18,7 +18,7 @@
         !! For convienence, integer or characters keys are also
         !! allowed to be used.
     contains
-        private
+        !private  ! remove for now to work around intel compile bug. see issue #6
         procedure(key_equal_func),deferred :: key_equal
         generic,public :: operator(==) => key_equal
     end type key_class
