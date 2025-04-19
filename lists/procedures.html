@@ -1,0 +1,595 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Modern Fortran Linked List">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>All Procedures &ndash; flist
+</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">flist </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12" id='text'>
+			 <h1>Procedures</h1>
+			 <table class="table table-striped">
+			 <thead><tr><th>Procedure</th><th>Location</th><th>Procedure Type</th><th>Description</th></tr></thead>
+			 <tbody>
+			   <tr>
+                 <td><a href='../proc/add_clone.html'>add_clone</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Add an item to the end of the list by <em>cloning</em> it.
+That is, using a sourced allocation: <code>allocate(newitem, source=value)</code>.
+A clone is made of the original value, which is not affected.
+The list contains only the clone, which will be deallocated (and
+finalized if a finalizer is present) when removed from the list.</p><a href="../proc/add_clone.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/add_pointer.html'>add_pointer</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Add an item to the list, and associate its pointer to the input value.</p><a href="../proc/add_pointer.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/destroy_list.html'>destroy_list</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>destroy the list (traverses from head to tail)</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/destroy_node.html'>destroy_node</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>destroy the node (and subsequent ones in the list).</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/destroy_node_data.html'>destroy_node_data</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>destroy the data in the node.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/get_data.html'>get_data</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Returns a pointer to the data stored in the list.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/get_node.html'>get_node</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Returns a pointer to a node in a list.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/get_node_data.html'>get_node_data</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Get the data from a node</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/has_key.html'>has_key</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Function</td>
+                 <td><p>Returns true if the key is present in the list</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/initialize_list.html'>initialize_list</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Function</td>
+                 <td><p>list constructor.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/keys_equal.html'>keys_equal</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Function</td>
+                 <td><p>Returns true if the two keys are equal.</p><a href="../proc/keys_equal.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../interface/list.html'>list</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Interface</td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/list_finalizer.html'>list_finalizer</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>just a wrapper for <a href="../proc/destroy_list.html">destroy_list</a>.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/remove_by_key.html'>remove_by_key</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Remove an item from the list (given the key).</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/remove_by_pointer.html'>remove_by_pointer</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Remove an item from the list.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/traverse.html'>traverse</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>traverse list from head to tail, and call the iterator function for each key.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/traverse_list.html'>traverse_list</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>traverse list from head to tail, and call the iterator function for each node.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/uppercase.html'>uppercase</a></td>
+                 <td><a href='../module/linked_list_module.html'>linked_list_module</a></td>
+                 <td>Function</td>
+                 <td><p>Convert a string to uppercase.</p></td>
+               </tr>
+			 </tbody></table>
+             <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: call~~graph~~CallGraph Pages: 1 -->
+<svg id="callgraphCallGraph" width="774pt" height="323pt"
+ viewBox="0.00 0.00 774.00 323.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="call~~graph~~CallGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 319)">
+<title>call~~graph~~CallGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-319 770,-319 770,4 -4,4"/>
+<!-- interface~list -->
+<g id="call~~graph~~CallGraph_node1" class="node">
+<title>interface~list</title>
+<g id="a_call~~graph~~CallGraph_node1"><a xlink:href="../interface/list.html" xlink:title="list">
+<polygon fill="#a7506f" stroke="#a7506f" points="99.5,-24 45.5,-24 45.5,0 99.5,0 99.5,-24"/>
+<text text-anchor="middle" x="72.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list</text>
+</a>
+</g>
+</g>
+<!-- proc~initialize_list -->
+<g id="call~~graph~~CallGraph_node12" class="node">
+<title>proc~initialize_list</title>
+<g id="a_call~~graph~~CallGraph_node12"><a xlink:href="../proc/initialize_list.html" xlink:title="initialize_list">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="279.5,-24 202.5,-24 202.5,0 279.5,0 279.5,-24"/>
+<text text-anchor="middle" x="241" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize_list</text>
+</a>
+</g>
+</g>
+<!-- interface~list&#45;&gt;proc~initialize_list -->
+<g id="call~~graph~~CallGraph_edge1" class="edge">
+<title>interface~list&#45;&gt;proc~initialize_list</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M99.52,-12C124.22,-12 161.97,-12 192.11,-12"/>
+<polygon fill="#000000" stroke="#000000" points="192.43,-15.5 202.43,-12 192.43,-8.5 192.43,-15.5"/>
+</g>
+<!-- none~operator(==) -->
+<g id="call~~graph~~CallGraph_node2" class="node">
+<title>none~operator(==)</title>
+<g id="a_call~~graph~~CallGraph_node2"><a xlink:href="../type/key_class.html#boundprocedure-operator%28%3D%3D%29" xlink:title="key_class%operator(==)">
+<polygon fill="#a7506f" stroke="#a7506f" points="145,-66 0,-66 0,-42 145,-42 145,-66"/>
+<text text-anchor="middle" x="72.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">key_class%operator(==)</text>
+</a>
+</g>
+</g>
+<!-- key_equal -->
+<g id="call~~graph~~CallGraph_node20" class="node">
+<title>key_equal</title>
+<polygon fill="#777777" stroke="#777777" points="274.5,-66 207.5,-66 207.5,-42 274.5,-42 274.5,-66"/>
+<text text-anchor="middle" x="241" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">key_equal</text>
+</g>
+<!-- none~operator(==)&#45;&gt;key_equal -->
+<g id="call~~graph~~CallGraph_edge2" class="edge">
+<title>none~operator(==)&#45;&gt;key_equal</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.08,-54C162.86,-54 181.37,-54 197.28,-54"/>
+<polygon fill="#000000" stroke="#000000" points="197.32,-57.5 207.32,-54 197.32,-50.5 197.32,-57.5"/>
+</g>
+<!-- proc~add_clone -->
+<g id="call~~graph~~CallGraph_node3" class="node">
+<title>proc~add_clone</title>
+<g id="a_call~~graph~~CallGraph_node3"><a xlink:href="../proc/add_clone.html" xlink:title="list%add_clone">
+<polygon fill="#d9534f" stroke="#d9534f" points="118.5,-168 26.5,-168 26.5,-144 118.5,-144 118.5,-168"/>
+<text text-anchor="middle" x="72.5" y="-153.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%add_clone</text>
+</a>
+</g>
+</g>
+<!-- proc~add_pointer -->
+<g id="call~~graph~~CallGraph_node4" class="node">
+<title>proc~add_pointer</title>
+<g id="a_call~~graph~~CallGraph_node4"><a xlink:href="../proc/add_pointer.html" xlink:title="list%add_pointer">
+<polygon fill="#d9534f" stroke="#d9534f" points="291.5,-168 190.5,-168 190.5,-144 291.5,-144 291.5,-168"/>
+<text text-anchor="middle" x="241" y="-153.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%add_pointer</text>
+</a>
+</g>
+</g>
+<!-- proc~add_clone&#45;&gt;proc~add_pointer -->
+<g id="call~~graph~~CallGraph_edge3" class="edge">
+<title>proc~add_clone&#45;&gt;proc~add_pointer</title>
+<path fill="none" stroke="#000000" d="M118.56,-156C137.51,-156 159.83,-156 180.13,-156"/>
+<polygon fill="#000000" stroke="#000000" points="180.22,-159.5 190.22,-156 180.22,-152.5 180.22,-159.5"/>
+</g>
+<!-- proc~get_node -->
+<g id="call~~graph~~CallGraph_node9" class="node">
+<title>proc~get_node</title>
+<g id="a_call~~graph~~CallGraph_node9"><a xlink:href="../proc/get_node.html" xlink:title="list%get_node">
+<polygon fill="#d9534f" stroke="#d9534f" points="450,-210 363,-210 363,-186 450,-186 450,-210"/>
+<text text-anchor="middle" x="406.5" y="-195.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%get_node</text>
+</a>
+</g>
+</g>
+<!-- proc~add_pointer&#45;&gt;proc~get_node -->
+<g id="call~~graph~~CallGraph_edge4" class="edge">
+<title>proc~add_pointer&#45;&gt;proc~get_node</title>
+<path fill="none" stroke="#000000" d="M288.85,-168.04C308.88,-173.18 332.35,-179.21 352.97,-184.51"/>
+<polygon fill="#000000" stroke="#000000" points="352.28,-187.94 362.83,-187.04 354.02,-181.16 352.28,-187.94"/>
+</g>
+<!-- proc~remove_by_pointer -->
+<g id="call~~graph~~CallGraph_node16" class="node">
+<title>proc~remove_by_pointer</title>
+<g id="a_call~~graph~~CallGraph_node16"><a xlink:href="../proc/remove_by_pointer.html" xlink:title="list%remove_by_pointer">
+<polygon fill="#d9534f" stroke="#d9534f" points="476,-168 337,-168 337,-144 476,-144 476,-168"/>
+<text text-anchor="middle" x="406.5" y="-153.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%remove_by_pointer</text>
+</a>
+</g>
+</g>
+<!-- proc~add_pointer&#45;&gt;proc~remove_by_pointer -->
+<g id="call~~graph~~CallGraph_edge5" class="edge">
+<title>proc~add_pointer&#45;&gt;proc~remove_by_pointer</title>
+<path fill="none" stroke="#000000" d="M291.94,-156C302.91,-156 314.78,-156 326.58,-156"/>
+<polygon fill="#000000" stroke="#000000" points="326.9,-159.5 336.9,-156 326.9,-152.5 326.9,-159.5"/>
+</g>
+<!-- proc~destroy_list -->
+<g id="call~~graph~~CallGraph_node5" class="node">
+<title>proc~destroy_list</title>
+<g id="a_call~~graph~~CallGraph_node5"><a xlink:href="../proc/destroy_list.html" xlink:title="list%destroy_list">
+<polygon fill="#d9534f" stroke="#d9534f" points="289.5,-108 192.5,-108 192.5,-84 289.5,-84 289.5,-108"/>
+<text text-anchor="middle" x="241" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%destroy_list</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy_node -->
+<g id="call~~graph~~CallGraph_node6" class="node">
+<title>proc~destroy_node</title>
+<g id="a_call~~graph~~CallGraph_node6"><a xlink:href="../proc/destroy_node.html" xlink:title="destroy_node">
+<polygon fill="#d9534f" stroke="#d9534f" points="448.5,-108 364.5,-108 364.5,-84 448.5,-84 448.5,-108"/>
+<text text-anchor="middle" x="406.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy_node</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy_list&#45;&gt;proc~destroy_node -->
+<g id="call~~graph~~CallGraph_edge6" class="edge">
+<title>proc~destroy_list&#45;&gt;proc~destroy_node</title>
+<path fill="none" stroke="#000000" d="M289.73,-96C309.97,-96 333.59,-96 354.21,-96"/>
+<polygon fill="#000000" stroke="#000000" points="354.36,-99.5 364.36,-96 354.36,-92.5 354.36,-99.5"/>
+</g>
+<!-- proc~destroy_node&#45;&gt;proc~destroy_node -->
+<g id="call~~graph~~CallGraph_edge7" class="edge">
+<title>proc~destroy_node&#45;&gt;proc~destroy_node</title>
+<path fill="none" stroke="#000000" d="M379.38,-108.01C369.91,-116.97 378.95,-126 406.5,-126 423.72,-126 433.7,-122.47 436.46,-117.64"/>
+<polygon fill="#000000" stroke="#000000" points="439.81,-116.61 433.62,-108.01 433.09,-118.6 439.81,-116.61"/>
+</g>
+<!-- proc~destroy_node_data -->
+<g id="call~~graph~~CallGraph_node7" class="node">
+<title>proc~destroy_node_data</title>
+<g id="a_call~~graph~~CallGraph_node7"><a xlink:href="../proc/destroy_node_data.html" xlink:title="node%destroy_node_data">
+<polygon fill="#d9534f" stroke="#d9534f" points="662,-138 512,-138 512,-114 662,-114 662,-138"/>
+<text text-anchor="middle" x="587" y="-123.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">node%destroy_node_data</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy_node&#45;&gt;proc~destroy_node_data -->
+<g id="call~~graph~~CallGraph_edge8" class="edge">
+<title>proc~destroy_node&#45;&gt;proc~destroy_node_data</title>
+<path fill="none" stroke="#000000" d="M448.9,-102.96C465.48,-105.74 485.18,-109.06 504.4,-112.29"/>
+<polygon fill="#000000" stroke="#000000" points="503.95,-115.76 514.39,-113.97 505.11,-108.86 503.95,-115.76"/>
+</g>
+<!-- proc~get_data -->
+<g id="call~~graph~~CallGraph_node8" class="node">
+<title>proc~get_data</title>
+<g id="a_call~~graph~~CallGraph_node8"><a xlink:href="../proc/get_data.html" xlink:title="list%get_data">
+<polygon fill="#d9534f" stroke="#d9534f" points="283,-252 199,-252 199,-228 283,-228 283,-252"/>
+<text text-anchor="middle" x="241" y="-237.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%get_data</text>
+</a>
+</g>
+</g>
+<!-- proc~get_data&#45;&gt;proc~get_node -->
+<g id="call~~graph~~CallGraph_edge9" class="edge">
+<title>proc~get_data&#45;&gt;proc~get_node</title>
+<path fill="none" stroke="#000000" d="M283.26,-229.4C304.44,-223.96 330.47,-217.27 353.05,-211.47"/>
+<polygon fill="#000000" stroke="#000000" points="354.01,-214.84 362.83,-208.96 352.27,-208.06 354.01,-214.84"/>
+</g>
+<!-- proc~keys_equal -->
+<g id="call~~graph~~CallGraph_node13" class="node">
+<title>proc~keys_equal</title>
+<g id="a_call~~graph~~CallGraph_node13"><a xlink:href="../proc/keys_equal.html" xlink:title="list%keys_equal">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="635.5,-210 538.5,-210 538.5,-186 635.5,-186 635.5,-210"/>
+<text text-anchor="middle" x="587" y="-195.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%keys_equal</text>
+</a>
+</g>
+</g>
+<!-- proc~get_node&#45;&gt;proc~keys_equal -->
+<g id="call~~graph~~CallGraph_edge10" class="edge">
+<title>proc~get_node&#45;&gt;proc~keys_equal</title>
+<path fill="none" stroke="#000000" d="M450.26,-198C473.55,-198 502.71,-198 528.03,-198"/>
+<polygon fill="#000000" stroke="#000000" points="528.25,-201.5 538.25,-198 528.25,-194.5 528.25,-201.5"/>
+</g>
+<!-- proc~get_node_data -->
+<g id="call~~graph~~CallGraph_node10" class="node">
+<title>proc~get_node_data</title>
+<g id="a_call~~graph~~CallGraph_node10"><a xlink:href="../proc/get_node_data.html" xlink:title="node%get_node_data">
+<polygon fill="#d9534f" stroke="#d9534f" points="136.5,-210 8.5,-210 8.5,-186 136.5,-186 136.5,-210"/>
+<text text-anchor="middle" x="72.5" y="-195.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">node%get_node_data</text>
+</a>
+</g>
+</g>
+<!-- proc~has_key -->
+<g id="call~~graph~~CallGraph_node11" class="node">
+<title>proc~has_key</title>
+<g id="a_call~~graph~~CallGraph_node11"><a xlink:href="../proc/has_key.html" xlink:title="list%has_key">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="112.5,-315 32.5,-315 32.5,-291 112.5,-291 112.5,-315"/>
+<text text-anchor="middle" x="72.5" y="-300.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%has_key</text>
+</a>
+</g>
+</g>
+<!-- proc~traverse_list -->
+<g id="call~~graph~~CallGraph_node18" class="node">
+<title>proc~traverse_list</title>
+<g id="a_call~~graph~~CallGraph_node18"><a xlink:href="../proc/traverse_list.html" xlink:title="list%traverse_list">
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-294 190,-294 190,-270 292,-270 292,-294"/>
+<text text-anchor="middle" x="241" y="-279.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%traverse_list</text>
+</a>
+</g>
+</g>
+<!-- proc~has_key&#45;&gt;proc~traverse_list -->
+<g id="call~~graph~~CallGraph_edge11" class="edge">
+<title>proc~has_key&#45;&gt;proc~traverse_list</title>
+<path fill="none" stroke="#000000" d="M112.54,-298.08C132.54,-295.55 157.34,-292.43 179.74,-289.6"/>
+<polygon fill="#000000" stroke="#000000" points="180.35,-293.05 189.83,-288.33 179.47,-286.11 180.35,-293.05"/>
+</g>
+<!-- proc~uppercase -->
+<g id="call~~graph~~CallGraph_node19" class="node">
+<title>proc~uppercase</title>
+<g id="a_call~~graph~~CallGraph_node19"><a xlink:href="../proc/uppercase.html" xlink:title="uppercase">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="766,-210 698,-210 698,-186 766,-186 766,-210"/>
+<text text-anchor="middle" x="732" y="-195.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">uppercase</text>
+</a>
+</g>
+</g>
+<!-- proc~keys_equal&#45;&gt;proc~uppercase -->
+<g id="call~~graph~~CallGraph_edge12" class="edge">
+<title>proc~keys_equal&#45;&gt;proc~uppercase</title>
+<path fill="none" stroke="#000000" d="M635.62,-198C652.28,-198 670.9,-198 687.23,-198"/>
+<polygon fill="#000000" stroke="#000000" points="687.59,-201.5 697.59,-198 687.59,-194.5 687.59,-201.5"/>
+</g>
+<!-- proc~list_finalizer -->
+<g id="call~~graph~~CallGraph_node14" class="node">
+<title>proc~list_finalizer</title>
+<g id="a_call~~graph~~CallGraph_node14"><a xlink:href="../proc/list_finalizer.html" xlink:title="list_finalizer">
+<polygon fill="#d9534f" stroke="#d9534f" points="110.5,-108 34.5,-108 34.5,-84 110.5,-84 110.5,-108"/>
+<text text-anchor="middle" x="72.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list_finalizer</text>
+</a>
+</g>
+</g>
+<!-- proc~list_finalizer&#45;&gt;proc~destroy_list -->
+<g id="call~~graph~~CallGraph_edge13" class="edge">
+<title>proc~list_finalizer&#45;&gt;proc~destroy_list</title>
+<path fill="none" stroke="#000000" d="M110.87,-96C131.83,-96 158.44,-96 182.05,-96"/>
+<polygon fill="#000000" stroke="#000000" points="182.3,-99.5 192.3,-96 182.3,-92.5 182.3,-99.5"/>
+</g>
+<!-- proc~remove_by_key -->
+<g id="call~~graph~~CallGraph_node15" class="node">
+<title>proc~remove_by_key</title>
+<g id="a_call~~graph~~CallGraph_node15"><a xlink:href="../proc/remove_by_key.html" xlink:title="list%remove_by_key">
+<polygon fill="#d9534f" stroke="#d9534f" points="301,-210 181,-210 181,-186 301,-186 301,-210"/>
+<text text-anchor="middle" x="241" y="-195.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%remove_by_key</text>
+</a>
+</g>
+</g>
+<!-- proc~remove_by_key&#45;&gt;proc~get_node -->
+<g id="call~~graph~~CallGraph_edge14" class="edge">
+<title>proc~remove_by_key&#45;&gt;proc~get_node</title>
+<path fill="none" stroke="#000000" d="M301.03,-198C317.99,-198 336.38,-198 352.93,-198"/>
+<polygon fill="#000000" stroke="#000000" points="352.97,-201.5 362.97,-198 352.97,-194.5 352.97,-201.5"/>
+</g>
+<!-- proc~remove_by_key&#45;&gt;proc~remove_by_pointer -->
+<g id="call~~graph~~CallGraph_edge15" class="edge">
+<title>proc~remove_by_key&#45;&gt;proc~remove_by_pointer</title>
+<path fill="none" stroke="#000000" d="M288.85,-185.96C307.58,-181.15 329.32,-175.57 348.92,-170.54"/>
+<polygon fill="#000000" stroke="#000000" points="349.83,-173.92 358.64,-168.04 348.08,-167.14 349.83,-173.92"/>
+</g>
+<!-- proc~remove_by_pointer&#45;&gt;proc~destroy_node_data -->
+<g id="call~~graph~~CallGraph_edge16" class="edge">
+<title>proc~remove_by_pointer&#45;&gt;proc~destroy_node_data</title>
+<path fill="none" stroke="#000000" d="M476,-144.49C485.34,-142.92 495,-141.29 504.54,-139.69"/>
+<polygon fill="#000000" stroke="#000000" points="505.14,-143.14 514.43,-138.03 503.98,-136.24 505.14,-143.14"/>
+</g>
+<!-- proc~traverse -->
+<g id="call~~graph~~CallGraph_node17" class="node">
+<title>proc~traverse</title>
+<g id="a_call~~graph~~CallGraph_node17"><a xlink:href="../proc/traverse.html" xlink:title="list%traverse">
+<polygon fill="#d9534f" stroke="#d9534f" points="113.5,-273 31.5,-273 31.5,-249 113.5,-249 113.5,-273"/>
+<text text-anchor="middle" x="72.5" y="-258.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list%traverse</text>
+</a>
+</g>
+</g>
+<!-- proc~traverse&#45;&gt;proc~traverse_list -->
+<g id="call~~graph~~CallGraph_edge17" class="edge">
+<title>proc~traverse&#45;&gt;proc~traverse_list</title>
+<path fill="none" stroke="#000000" d="M113.81,-266.08C133.58,-268.58 157.8,-271.63 179.72,-274.4"/>
+<polygon fill="#000000" stroke="#000000" points="179.58,-277.91 189.94,-275.69 180.46,-270.96 179.58,-277.91"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              flist
+ was developed by Jacob Williams<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
